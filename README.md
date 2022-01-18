@@ -1,16 +1,4 @@
-**SOAR: Satalite Optimized Amateur Radio**
+# **SOAR: Satalite Optimized Amateur Radio**
 
-# User's Guide
-## Screens
-Overview of Screens
-### 'VFO' Standard HT: VFO
-### 'MR' Standard HT: MR (Memory)
-### 'Pred' Satellite Pass Prediction
-### 'QSO' Satellite Pass Operation
-### 'Play' Satellite Pass Replay
-### 'Menu' Configuration Menu
-
-# Developer's Guide
-## 
-
-
+* The [User's Guide](User-Guide.md) answers questions like "How do I use this thing?"
+* The [Developer's Guide](Developer-Guide.md) answers questions like "How do I burn new firmware on this thing?"
