@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../SOAR-Code/SOAR-v2.1-Code"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.jsonl": "ndjson",
+			"*.tcc": "cpp",
+			"type_traits": "cpp",
+			"functional": "cpp",
+			"istream": "cpp"
+		}
+	}
+}
