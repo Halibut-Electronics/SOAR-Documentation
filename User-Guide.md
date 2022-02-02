@@ -120,3 +120,32 @@ Not implemented yet (2022-01-17)
 ### Configuration Menu: `Conf`
 Not implemented yet (2022-01-17)
 
+## Accessing the SD Card Storage
+The SD card inside SOAR stores it's configuration files, including TLE data downloaded from Celestrak/NORAD, and the audio recordings made on device.  When you connect SOAR to your computer over USB, it should show up as a cell phone or camera, using a profile called MTP.
+
+### Updating TLE Data
+SOAR reads TLE data as formated by NORAD, downloaded from Celestrak.  No pre-processing is required.
+
+You can, if you want, add comments to the file to make it easier for you read.  Comments must have a `#` character in the very first column.  It also skips empty lines. (Hint: a bunch of which space on a line is NOT empty.)  But any line that is not blank, and does not start with a `#` in the first column, is likely to break parsing of the TLE file.
+
+* Make sure you can access the SOAR storage (see below).
+* Download your preferred TLE file (eg: https://www.celestrak.com/NORAD/elements/amateur.txt) and save it as `amateur.txt` to the SOAR storage.
+  * In the future, I might make the file name a configurable.  But for now, SOAR reads `amateur.txt`.  You can put whatever TLE data there you want, but for now it must be named `amateur.txt`.
+* Reboot SOAR.  It only reads the TLE data from disk on boot.
+
+### Configuring Memory Channels
+Memory Channels are stored in `memory_channels.jsonl`.  It is one JSON object per memory channel.
+
+**TODO** Describe the JSON format.  In the mean time, copy an existing line and modify it.
+
+To make a channel a satellite channel, set `sat_name` to the full 24 character name from the TLE file (including trailing white space!)
+
+### Accessing MTP devices like SOAR in Windows
+**TODO** I don't have a Windows machine to test on.
+
+### Accessing MTP devices like SOAR in Linux
+I haven't yet (2022-02-01) gotten SOAR to mount as a POSIX filesstem, but I can copy files to and from it using the GNOME filesystem browser, and I can "Save Page As..." directly to it in Firefox (for Celestrak files).
+
+If your Linux distribution doesn't work out of the box, try the following.
+* Make sure your user has permissions to access SOAR over USB:  Download http://www.pjrc.com/teensy/00-teensy.rules into `/etc/udev/rules.d/00-teensy.rules` on your computer and reload udev (or just reboot).
+* Install the `mtp-tools` and/or `jmtpfs` packages.

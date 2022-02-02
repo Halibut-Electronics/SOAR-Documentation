@@ -24,9 +24,9 @@ Plug in your SOAR to a USB port on your computer, and start the `TeensyLoader`. 
 If the SOAR is totally bricked (so that the boot loader isn't even running), the arrows will be gray'd out too.  That (probably) ok, we can fix this.
 
 ### Downloading New Firmware
-Halibut Electronics will make new firmware available somewhere **TODO** Provide link, probably the Releases section of GitHub.
+New releases of firmware are available here: https://electronics.halibut.com/releases/SOAR/
 
-Download the `latest` release.  This will give you a file that ends with `.hex`.  This is the firmware file.  Note this filename and location.
+Files are date stamped. Download the latest release.  This will give you a file that ends with `.hex`.  This is the firmware file.  Note this filename and location.
 
 ### Flash the Firmware
 Click on the Document icon, `Open HEX File`.  Load the `.hex` file you just downloaded.
@@ -38,9 +38,9 @@ Click on the Document icon, `Open HEX File`.  Load the `.hex` file you just down
 ### Getting At The SD Card (Version v2.1 only)
 **Note:** This section only applies to the v2.1 Prototype hardware.  This will probably be replaced when v2.2 Production hardware is available.
 
-There's an SD Card on the buried end of the Teensy.  Eventually, you'll be able to access this SD Card over the USB port as an attached "thumb drive" so you won't need physical access, though this isn't working yet (as of 2022-01-17).
+**Note:** This is (hopefully) no longer necessary, since the 2022-02-01 build, which adds MTP access to the SD card over USB.
 
-In the mean time, you'll need to remove the UI board on top to access the SD card:
+There's an SD Card on the buried end of the Teensy. This stores all configuration, audio recordings, etc.  It is presented to your computer over USB as an MTP device (like a camera or phone).  If you can't get MTP working, or otherwise want direct access to this SD card, you'll need to remove the UI board on top to access the SD card:
 * Remove all power (including USB cable) from SOAR
 * Remove the four screws holing the UI Deck (the top board) from the stack.
   * Note: The UI Deck is the green board, not just the display on the red board. The display is part of the UI Deck, and is hard soldered down. Don't try to remove it.
