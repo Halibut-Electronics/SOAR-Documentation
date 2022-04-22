@@ -4,13 +4,14 @@ TODO
 
 Quick notes:
 * Install vsCode.
+  * Install Add-ons: C++, Python (probably not necessary, but I did), Gitlense (also probablty not necessary)
 * Install PlatformIO.
-  * Install the Arduino platform
-  * Install the Teensy boards
-  * (Unfortunately) Modify Teensy files for USB_Serial_Audio_MTP support
-* Get the `SOAR-Code` source code from GitHub (currently (2022-01-17) a private repo, but this might change.)
-* Get several Halibut Electronics maintained branches of libraries from GitHub, then link them into `SOAR-Code`.
-* Open source code in PlatformIO.
+* Get the `SOAR-Code` source code from GitHub (currently (2022-04-05) a private repo, but this might change.)
+* Open the `SOAR-Code/SOAR-v2-Code` directory in VS Code. This will download and install all the other addons that PlatformIO needs, like the Arduino platform, Teensy boards, and the libraries.
+* Modify the Teensy Platform for `USB_SOAR` support:
+  * TBD: Need to get this off my XPS15.  Using `USB_MTPDISK_SERIAL` in the mean time.  Bonus: It doesn't hijack my music every time I reprogram the radio.
+  * Modify `.platformio/packages/framework-arduinoteensy/cores/teensy4/` to add `USB_MTP_SERIAL` section
+  * Modify `.platformio/platforms/teensy/builder/frameworks/arduino.py` to add `USB_MTP_SERIAL` to the list.
 * Build, Upload, Profit!
 
 ## Flashing a pre-built `.hex` file.
