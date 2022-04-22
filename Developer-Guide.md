@@ -9,6 +9,74 @@ Quick notes:
 * Get the `SOAR-Code` source code from GitHub (currently (2022-04-05) a private repo, but this might change.)
 * Open the `SOAR-Code/SOAR-v2-Code` directory in VS Code. This will download and install all the other addons that PlatformIO needs, like the Arduino platform, Teensy boards, and the libraries.
 * Modify the Teensy Platform for `USB_SOAR` support:
+  * Edit `./packages/framework-arduinoteensy/cores/teensy4/usb_desc.h` and add:
+    ```
+// Equivalent to MTPDISK_SERIAL_AUDIO, but with the manufacturer and product names 
+// set to Halibut Electronics stuff.
+#elif defined(USB_SOAR)
+  #define VENDOR_ID             0x16C0
+  #define PRODUCT_ID                0x04D5 //fake an include everything device
+  #define RAWHID_USAGE_PAGE 0xFFAB  // recommended: 0xFF00 to 0xFFFF
+  #define RAWHID_USAGE      0x0200  // recommended: 0x0100 to 0xFFFF
+  #define DEVICE_CLASS      0xEF
+  #define DEVICE_SUBCLASS   0x02
+  #define DEVICE_PROTOCOL   0x01
+
+  #define MANUFACTURER_NAME     {'H','a','l','i','b','u','t',' ','E','l','e','c','t','r','o','n','i','c','s'}
+  #define MANUFACTURER_NAME_LEN 19
+  #define PRODUCT_NAME          {'S','O','A','R','-','1'}
+  #define PRODUCT_NAME_LEN      6
+  #define EP0_SIZE              64
+  #define NUM_INTERFACE         6
+  #define NUM_ENDPOINTS         7
+
+  #define CDC_IAD_DESCRIPTOR    1 // Serial, last interface: 2, last endpoint: 3
+  #define CDC_STATUS_INTERFACE  1
+  #define CDC_DATA_INTERFACE    2
+  #define CDC_ACM_ENDPOINT      2
+  #define CDC_RX_ENDPOINT       3
+  #define CDC_TX_ENDPOINT       3
+  #define CDC_ACM_SIZE          16
+  #define CDC_RX_SIZE_480       512
+  #define CDC_TX_SIZE_480       512
+  #define CDC_RX_SIZE_12        64
+  #define CDC_TX_SIZE_12        64
+  #define ENDPOINT2_CONFIG  ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_INTERRUPT
+  #define ENDPOINT3_CONFIG  ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_BULK
+
+  #define MTP_INTERFACE         3 // MTP Disk, last interface: 3, last endpoint: 5
+  #define MTP_TX_ENDPOINT       4
+  #define MTP_RX_ENDPOINT       4
+  #define MTP_EVENT_ENDPOINT    5
+  #define MTP_TX_SIZE_480       512
+  #define MTP_RX_SIZE_480       512
+  #define MTP_TX_SIZE_12        64
+  #define MTP_RX_SIZE_12        64
+  #define MTP_EVENT_SIZE        32
+  #define MTP_EVENT_INTERVAL_12 10  // 10 = 10 ms
+  #define MTP_EVENT_INTERVAL_480 7  // 7 = 8 ms
+  #define ENDPOINT4_CONFIG  ENDPOINT_RECEIVE_BULK + ENDPOINT_TRANSMIT_BULK
+  #define ENDPOINT5_CONFIG  ENDPOINT_RECEIVE_INTERRUPT + ENDPOINT_TRANSMIT_INTERRUPT  // ????
+
+  #define AUDIO_INTERFACE       4   // Audio (uses 3 consecutive interfaces), last interface: 6, last endpoint: 7
+  #define AUDIO_TX_ENDPOINT     6
+  #define AUDIO_TX_SIZE         180
+  #define AUDIO_RX_ENDPOINT     6
+  #define AUDIO_RX_SIZE         180
+  #define AUDIO_SYNC_ENDPOINT   7
+  #define ENDPOINT6_CONFIG  ENDPOINT_RECEIVE_ISOCHRONOUS + ENDPOINT_TRANSMIT_ISOCHRONOUS
+  #define ENDPOINT7_CONFIG  ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_ISOCHRONOUS
+    ```
+  * Edit `./packages/framework-arduinoteensy/cores/teensy4/usb.c`, add `USB_SOAR` to the OR list on line 1061:
+    ```
+uint32_t usb_transfer_status(const transfer_t *transfer)
+{
+#if defined(USB_MTPDISK) || defined(USB_MTPDISK_SERIAL) || defined(USB_SOAR)
+    uint32_t status, cmd;
+[...]
+    ```
+  * Edit `./platforms/teensy/builder/frameworks/arduino.py`, add `USB_SOAR` to the list of `BUILTIN_USB_FLAGS`.
+* If only doing `USB_MT_SERIAL`, do these steps.  (These aren't strictly necessary if using USB_SOAR, but don't conflict either.)
   * TBD: Need to get this off my XPS15.  Using `USB_MTPDISK_SERIAL` in the mean time.  Bonus: It doesn't hijack my music every time I reprogram the radio.
   * Modify `.platformio/packages/framework-arduinoteensy/cores/teensy4/` to add `USB_MTP_SERIAL` section
   * Modify `.platformio/platforms/teensy/builder/frameworks/arduino.py` to add `USB_MTP_SERIAL` to the list.
