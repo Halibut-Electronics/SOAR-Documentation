@@ -9,7 +9,7 @@ Quick notes:
 * Get the `SOAR-Code` source code from GitHub (currently (2022-04-05) a private repo, but this might change.)
 * Open the `SOAR-Code/SOAR-v2-Code` directory in VS Code. This will download and install all the other addons that PlatformIO needs, like the Arduino platform, Teensy boards, and the libraries.
 * Modify the Teensy Platform for `USB_SOAR` support:
-  * Edit `./packages/framework-arduinoteensy/cores/teensy4/usb_desc.h` and add:
+  * Edit `.platformio/packages/framework-arduinoteensy/cores/teensy4/usb_desc.h` and add:
     ```
 // Equivalent to MTPDISK_SERIAL_AUDIO, but with the manufacturer and product names 
 // set to Halibut Electronics stuff.
@@ -67,7 +67,7 @@ Quick notes:
   #define ENDPOINT6_CONFIG  ENDPOINT_RECEIVE_ISOCHRONOUS + ENDPOINT_TRANSMIT_ISOCHRONOUS
   #define ENDPOINT7_CONFIG  ENDPOINT_RECEIVE_UNUSED + ENDPOINT_TRANSMIT_ISOCHRONOUS
     ```
-  * Edit `./packages/framework-arduinoteensy/cores/teensy4/usb.c`, add `USB_SOAR` to the OR list on line 1061:
+  * Edit `.platformio/packages/framework-arduinoteensy/cores/teensy4/usb.c`, add `USB_SOAR` to the OR list on line 1035:
     ```
 uint32_t usb_transfer_status(const transfer_t *transfer)
 {
@@ -75,7 +75,7 @@ uint32_t usb_transfer_status(const transfer_t *transfer)
     uint32_t status, cmd;
 [...]
     ```
-  * Edit `./platforms/teensy/builder/frameworks/arduino.py`, add `USB_SOAR` to the list of `BUILTIN_USB_FLAGS`.
+  * Edit `.platformio/platforms/teensy/builder/frameworks/arduino.py`, add `USB_SOAR` to the list of `BUILTIN_USB_FLAGS`.
 * If only doing `USB_MT_SERIAL`, do these steps.  (These aren't strictly necessary if using USB_SOAR, but don't conflict either.)
   * TBD: Need to get this off my XPS15.  Using `USB_MTPDISK_SERIAL` in the mean time.  Bonus: It doesn't hijack my music every time I reprogram the radio.
   * Modify `.platformio/packages/framework-arduinoteensy/cores/teensy4/` to add `USB_MTP_SERIAL` section
