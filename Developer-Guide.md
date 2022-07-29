@@ -6,14 +6,14 @@ This includes instructions on how to burn a new firmware to your SOAR.
 
 - [1. Developer's Guide](#1-developers-guide)
 - [2. Table of Contents](#2-table-of-contents)
-- [3. Flashing a pre-built `.hex` file.](#3-flashing-a-pre-built-hex-file)
+- [3. Flashing a pre-built `.hex` file](#3-flashing-a-pre-built-hex-file)
     - [3.1. Install `TeensyLoader` (Do this once)](#31-install-teensyloader-do-this-once)
     - [3.2. Downloading New Firmware](#32-downloading-new-firmware)
     - [3.3. Flash the Firmware](#33-flash-the-firmware)
     - [3.4. Getting At The SD Card (Version v2.1 only)](#34-getting-at-the-sd-card-version-v21-only)
 - [4. Setting up a Full Development Environment](#4-setting-up-a-full-development-environment)
 
-# 3. Flashing a pre-built `.hex` file.
+# 3. Flashing a pre-built `.hex` file
 
 ## 3.1. Install `TeensyLoader` (Do this once)
 
@@ -36,7 +36,7 @@ Files are date stamped. Download the latest release.  This will give you a file 
 Click on the Document icon, `Open HEX File`.  Load the `.hex` file you just downloaded.
 
 * **If the `Program` button works**, then press it.
-* **If the `Program` button is gray'd out or does not work**, then use [a long plastic tool of some kind](https://www.ifixit.com/Store/Tools/Spudger/IF145-002?o=4) and press the (physical) `Program` button on the Microcontroller in the middle of the middle board. 
+* **If the `Program` button is gray'd out or does not work**, then use [a long plastic tool of some kind](https://www.ifixit.com/Store/Tools/Spudger/IF145-002?o=4) and press the (physical) `Program` button on the Microcontroller in the middle of the middle board.
     * "Golly, Mark, could you make that any harder to get to?"  Sorry about that...  I don't have to do this when programming from PlatformIO, it just programs the Teensy directly and automatically. I haven't yet figured out what PlatformIO is doing that makes this work automatically. I'll update this document if I figure it out. (I also accept pull requests! ;-)
 
 ## 3.4. Getting At The SD Card (Version v2.1 only)
